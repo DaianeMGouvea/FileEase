@@ -1,0 +1,30 @@
+<div class="w-full flex items-center bg-gray-100">
+  <div class="col max-w-md flex justify-center p-8 rounded-lg shadow-md bg-white">
+    <h2 class="text-2xl font-bold text-center mb-6">Log in to your account</h2>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field mb-6">
+        <%= f.label :email, class: "block text-gray-700" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      </div>
+
+      <div class="field mb-6">
+        <%= f.label "Senha", class: "block text-gray-700" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      </div>
+
+      <div class="field mb-6">
+        <%= f.check_box :remember_me, class: "mr-2 leading-tight" %>
+        <%= f.label "Lembre-me", class: "text-sm text-gray-700" %>
+      </div>
+
+      <div class="text-center">
+        <%= f.submit "Entrar", class: "w-full bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75" %>
+      </div>
+    <% end %>
+
+    <div class="text-center mt-6">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
