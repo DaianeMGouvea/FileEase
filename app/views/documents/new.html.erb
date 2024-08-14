@@ -1,10 +1,13 @@
-<h1>Upload Document</h1>
-<%= form_for @document, url: documents_path, html: { multipart: true } do |f| %>
-  <div class="field">
-    <%= f.label :file %>
-    <%= f.file_field :file %>
+<h1 class="text-2xl font-bold text-center mb-6 text-indigo-600 ">Faça o Upload do arquivo xml</h1>
+<%= form_for @document, url: documents_path, html: { multipart: true, class: "max-w-md mx-auto bg-white p-8 rounded-lg shadow-md" } do |f| %>
+  <div class="mb-4 text-center">
+    <%= image_tag 'icons/file_icon.png', alt: 'File Icon', class: 'mx-auto h-10 w-12 mb-6' %>
+    <%= f.file_field :file, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" %>
   </div>
-  <div class="actions">
-    <%= f.submit 'Upload' %>
+  <div class="text-center">
+    <%= f.submit 'Upload', class: "inline-flex items-center bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75" do %>
+      Upload
+    <% end %>
   </div>
 <% end %>
+
