@@ -1,0 +1,10 @@
+<h1>Upload Document</h1>
+<%= form_for @document, url: documents_path, html: { multipart: true } do |f| %>
+  <div class="field">
+    <%= f.label :file %>
+    <%= f.file_field :file %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Upload' %>
+  </div>
+<% end %>

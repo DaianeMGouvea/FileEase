@@ -1,0 +1,19 @@
+<!-- app/views/documents/show.html.erb -->
+<h1>Document Details</h1>
+
+<p>
+  <strong>File:</strong>
+  <%= @document.file? ? link_to(@document.file.filename, @document.file.url) : 'No file uploaded' %>
+</p>
+
+<p>
+  <strong>Created At:</strong>
+  <%= @document.created_at.strftime("%B %d, %Y %I:%M %p") %>
+</p>
+
+<p>
+  <strong>Updated At:</strong>
+  <%= @document.updated_at.strftime("%B %d, %Y %I:%M %p") %>
+</p>
+
+<%= link_to 'Back', new_document_path %>
