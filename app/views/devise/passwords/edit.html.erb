@@ -1,11 +1,15 @@
-<h2>Change your password</h2>
+<div class="absolute top-0 left-0 p-4">
+  <%= image_tag 'file_ease_logo.png', alt: 'Logo', class: 'h-12' %>
+</div>
+
+<h2>Altere sua senha</h2>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
   <%= f.hidden_field :reset_password_token %>
 
   <div class="field">
-    <%= f.label :password, "New password" %><br />
+    <%= f.label :password, "Nova senha" %><br />
     <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em><br />
     <% end %>
@@ -13,12 +17,12 @@
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
+    <%= f.label :password_confirmation, "Confirma sua senha" %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Change my password" %>
+    <%= f.submit "Alterar" %>
   </div>
 <% end %>
 
