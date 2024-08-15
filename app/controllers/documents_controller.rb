@@ -7,8 +7,8 @@ class DocumentsController < ApplicationController
 
   def create
     @document = current_user.documents.build(document_params)
-
     if @document.save
+      ProcessXmlJob.perform_async(@document.id)
       redirect_to @document, notice: 'Document was successfully uploaded.'
     else
       render :new
