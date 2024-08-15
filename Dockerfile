@@ -59,6 +59,11 @@ COPY --from=build /rails /rails
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     chown -R 1000:1000 db log storage tmp
+
+# Create and set permissions for uploads directory
+RUN mkdir -p /rails/public/uploads && \
+    chown -R 1000:1000 /rails/public/uploads
+
 USER 1000:1000
 
 # Deployment options
@@ -66,7 +71,7 @@ ENV RAILS_LOG_TO_STDOUT="1" \
     RAILS_SERVE_STATIC_FILES="true"
 
 # Entrypoint sets up the container.
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+ENTRYPOINT ["./bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000

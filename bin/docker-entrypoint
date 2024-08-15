@@ -1,5 +1,12 @@
-#!/bin/bash -e
+#!/bin/bash
 
-# Add any container initialization steps here
+# Verificar se a pasta uploads existe, se não, criar
+if [ ! -d "/rails/public/uploads" ]; then
+  mkdir -p /rails/public/uploads
+fi
 
-exec "${@}"
+# Definir permissões corretas para a pasta
+chmod -R 755 /rails/public/uploads
+
+# Executar o comando principal da aplicação
+exec "$@"
