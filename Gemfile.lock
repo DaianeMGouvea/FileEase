@@ -68,6 +68,9 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
     ast (2.4.2)
     bcrypt (3.1.19)
     bindex (0.8.1)
@@ -96,8 +99,13 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.1)
+    docile (1.4.0)
     dockerfile-rails (1.6.17)
       rails (>= 3.0.0)
+    dotenv (3.1.2)
+    dotenv-rails (3.1.2)
+      dotenv (= 3.1.2)
+      railties (>= 6.1)
     erubi (1.13.0)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
@@ -228,6 +236,11 @@ GEM
       rspec-expectations (~> 3.10)
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
+    rspec-sidekiq (5.0.0)
+      rspec-core (~> 3.0)
+      rspec-expectations (~> 3.0)
+      rspec-mocks (~> 3.0)
+      sidekiq (>= 5, < 8)
     rspec-support (3.13.1)
     rubocop (1.65.1)
       json (~> 2.3)
@@ -251,6 +264,12 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -290,11 +309,13 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  annotate
   bootsnap
   carrierwave
   debug
   devise
   dockerfile-rails (>= 1.6)
+  dotenv-rails
   factory_bot_rails (~> 6.0)
   faker (~> 2.0)
   importmap-rails
@@ -304,8 +325,10 @@ DEPENDENCIES
   rails (~> 7.0.8, >= 7.0.8.4)
   redis (~> 4.0)
   rspec-rails (~> 5.0)
+  rspec-sidekiq
   rubocop
   sidekiq (~> 7.3)
+  simplecov
   sprockets-rails
   stimulus-rails
   tailwindcss-rails

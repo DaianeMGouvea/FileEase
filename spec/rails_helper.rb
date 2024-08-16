@@ -1,10 +1,33 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
+ENV['REDIS_URL'] ||= 'redis://localhost:6379/1'
+
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
+require 'simplecov'
+SimpleCov.start
+
+Sidekiq::Testing.fake!
+
+require 'sidekiq/testing'
+
+require 'carrierwave'
+require 'carrierwave/test/matchers'
+
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
+RSpec.configure do |config|
+  config.include CarrierWave::Test::Matchers
+end
+
+# Configura o Sidekiq para o modo inline, processando os jobs imediatamente
+Sidekiq::Testing.inline!
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -33,7 +56,7 @@ end
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::IntegrationHelpers, type: :request
-  
+
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   config.use_transactional_fixtures = true
@@ -41,5 +64,4 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.filter_rails_from_backtrace!
- 
 end

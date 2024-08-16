@@ -1,8 +1,9 @@
-# spec/factories/users.rb
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :user do
-    email { "test@example.com" }
-    password { "password123" }
-    password_confirmation { "password123" }
+    email { Faker::Internet.unique.email }
+    password { 'password123' }
+    password_confirmation { 'password123' }
   end
 end

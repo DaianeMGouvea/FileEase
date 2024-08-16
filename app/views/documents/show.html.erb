@@ -1,9 +1,9 @@
 <% if @document.report.present? %>
   <div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-    <h2 class="text-2xl font-semibold mb-4">Relatório</h2>
+    <h2 class="text-2xl font-bold mb-4">Relatório</h2>
 
     <div class="border-b pb-4 mb-4">
-      <h3 class="text-xl font-semibold mb-2">Dados do Documento Fiscal</h3>
+      <h3 class="text-xl font-bold mb-2">Dados do Documento Fiscal</h3><br/>
       <p><strong>Série:</strong> <%= @document.report['serie'] || 'Dados não disponíveis' %></p>
       <p><strong>Número da Nota Fiscal:</strong> <%= @document.report['nNF'] || 'Dados não disponíveis' %></p>
       <p><strong>Data e Hora de Emissão:</strong> <%= @document.report['dhEmi'] || 'Dados não disponíveis' %></p>
@@ -12,37 +12,37 @@
     </div>
 
     <div class="border-b pb-4 mb-4">
-      <h3 class="text-xl font-semibold mb-2">Produtos Listados</h3>
-      <% if @document.report['products'].present? %>
+      <h3 class="text-xl font-bold mb-2">Produtos Listados</h3>
+      <% if @document.report['det'].present? %>
         <ul class="list-disc pl-5 space-y-4">
-          <% @document.report['products'].each do |product| %>
+          <% @document.report['det'].each do |det| %>
             <li class="p-4 bg-gray-50 rounded-md shadow-sm">
-              <p><strong>Nome:</strong> <%= product['xProd'] || 'Dados não disponíveis' %></p>
-              <p><strong>NCM:</strong> <%= product['NCM'] || 'Dados não disponíveis' %></p>
-              <p><strong>CFOP:</strong> <%= product['CFOP'] || 'Dados não disponíveis' %></p>
-              <p><strong>Unidade Comercializada:</strong> <%= product['uCom'] || 'Dados não disponíveis' %></p>
-              <p><strong>Quantidade Comercializada:</strong> <%= product['qCom'] || 'Dados não disponíveis' %></p>
-              <p><strong>Valor Unitário:</strong> <%= number_to_currency(product['vUnCom'].to_f) || 'Dados não disponíveis' %></p>
+
+              <p><strong>Nome:</strong> <%= det['xProd'] || 'Dados não disponíveis' %></p>
+              <p><strong>NCM:</strong> <%= det['NCM'] || 'Dados não disponíveis' %></p>
+              <p><strong>CFOP:</strong> <%= det['CFOP'] || 'Dados não disponíveis' %></p>
+              <p><strong>Unidade Comercializada:</strong> <%= det['uCom'] || 'Dados não disponíveis' %></p>
+              <p><strong>Quantidade Comercializada:</strong> <%= det['qCom'] || 'Dados não disponíveis' %></p>
+              <p><strong>Valor Unitário:</strong> <%= number_to_currency(det['vUnCom'].to_f) || 'Dados não disponíveis' %></p>
+              
+              <h3 class="text-xl font-bold mb-2">Impostos Associados<br/></h3>
+              <p><strong>ICMS:</strong> <%= number_to_currency(det['vICMS'] || 'Dados não disponíveis') %></p>
+              <p><strong>IPI:</strong> <%= number_to_currency(det['vIPI'] || 'Dados não disponíveis') %></p>
+              <p><strong>PIS:</strong> <%= number_to_currency(det['vPIS'] || 'Dados não disponíveis') %></p>
+              <p><strong>COFINS:</strong> <%= number_to_currency(det['vCOFINS'] || 'Dados não disponíveis') %></p>
             </li>
           <% end %>
+         
         </ul>
       <% else %>
         <p>Não há produtos listados.</p>
       <% end %>
     </div>
 
-    <div class="border-b pb-4 mb-4">
-      <h3 class="text-xl font-semibold mb-2">Impostos Associados</h3>
-      <p><strong>ICMS:</strong> <%= number_to_currency(@document.report['total_icms'].to_f) || 'Dados não disponíveis' %></p>
-      <p><strong>IPI:</strong> <%= number_to_currency(@document.report['total_ipi'].to_f) || 'Dados não disponíveis' %></p>
-      <p><strong>PIS:</strong> <%= number_to_currency(@document.report['total_pis'].to_f) || 'Dados não disponíveis' %></p>
-      <p><strong>COFINS:</strong> <%= number_to_currency(@document.report['total_cofins'].to_f) || 'Dados não disponíveis' %></p>
-    </div>
-
     <div>
-      <h3 class="text-xl font-semibold mb-2">Totalizadores</h3>
-      <p><strong>Total dos Produtos:</strong> <%= number_to_currency(@document.report['total_produtos'].to_f) || 'Dados não disponíveis' %></p>
-      <p><strong>Total dos Impostos:</strong> <%= number_to_currency(@document.report['total_impostos'].to_f) || 'Dados não disponíveis' %></p>
+      <h3 class="text-xl font-bold mb-2">Totalizadores</h3><br/>
+      <p><strong>Total dos Produtos:</strong> <%= number_to_currency(@document.report['tot_products'].to_f) || 'Dados não disponíveis' %></p>
+      <p><strong>Total dos Impostos:</strong> <%= number_to_currency(@document.report['tot_taxes'].to_f) || 'Dados não disponíveis' %></p>
     </div>
   </div>
 <% else %>
