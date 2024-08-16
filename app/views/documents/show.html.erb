@@ -45,6 +45,7 @@
       <p><strong>Total dos Impostos:</strong> <%= number_to_currency(@document.report['tot_taxes'].to_f) || 'Dados não disponíveis' %></p>
     </div>
   </div>
+  <%= link_to "Export to Excel", export_to_excel_document_path(@document), class: "btn btn-primary" %>
 <% else %>
   <div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
     <p>Nenhum relatório disponível.</p>

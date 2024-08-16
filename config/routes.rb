@@ -9,5 +9,9 @@ Rails.application.routes.draw do
   devise_for :users
   root 'documents#new'
 
-  resources :documents, only: %i[new create show]
+  resources :documents, only: %i[new create show] do
+    member do
+      get :export_to_excel
+    end
+  end
 end

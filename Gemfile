@@ -9,6 +9,8 @@ gem 'bootsnap', require: false
 gem 'carrierwave'
 gem 'devise'
 
+gem 'axlsx'
+gem 'axlsx_rails'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'pg', '~> 1.1'
