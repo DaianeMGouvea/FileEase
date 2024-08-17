@@ -28,3 +28,6 @@ console_command = '/rails/bin/rails console'
 [[statics]]
   guest_path = '/rails/public'
   url_prefix = '/'
+
+[env]
+  REDIS_URL = "redis-14801.c308.sa-east-1-1.ec2.redns.redis-cloud.com:14801"
