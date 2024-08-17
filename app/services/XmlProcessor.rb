@@ -12,7 +12,7 @@ class XmlProcessor
       dh_emi: extract_dh_emi,
       emit: extract_emitente,
       dest: extract_destinatario,
-      det: extract_products,
+      products: extract_products,
       tot_products: calculate_total_products,
       tot_taxes: calculate_total_taxes
     }
