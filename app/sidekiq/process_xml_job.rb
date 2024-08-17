@@ -5,7 +5,7 @@ class ProcessXmlJob
 
   def perform(document_id)
     document = Document.find(document_id)
-    return puts 'No file attached to the document.' unless document.file.present?
+    return Rails.logger.debug 'No file attached to the document.' if document.file.blank?
 
     xml_file = File.open(document.file.path)
     xml_data = XmlData.new(xml_file)
@@ -13,6 +13,6 @@ class ProcessXmlJob
     report_data = processor.process
 
     document.update(report: report_data)
-    puts 'Document processed successfully!'
+    Rails.logger.debug 'Document processed successfully!'
   end
 end
