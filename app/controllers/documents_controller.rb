@@ -14,9 +14,21 @@ class DocumentsController < ApplicationController
     @document = current_user.documents.build(document_params)
     if @document.save
       ProcessXmlJob.perform_async(@document.id)
-      redirect_to @document, notice: 'Document was successfully uploaded.'
+
+      respond_to do |format|
+        format.html do
+          redirect_to new_document_path(file_name: @document.file.filename.to_s,
+                                        document_id: @document.id)
+        end
+        format.json { render json: { file_name: @document.file.filename.to_s, document_id: @document.id } }
+      end
     else
-      render :new
+      respond_to do |format|
+        format.html { render :new }
+        format.json do
+          render json: { error: @document.errors.full_messages.to_sentence }, status: :unprocessable_entity
+        end
+      end
     end
   end
 

@@ -1,8 +1,4 @@
-<div id="loading-indicator" class="flex justify-center items-center h-64">
-  <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-</div>
-
-<div id="report-content" class="hidden">
+<div id="report-content">
   <% if @document.report.present? %>
     <div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h2 class="text-2xl font-bold mb-4">Relatório</h2>
@@ -56,20 +52,3 @@
   <% end %>
 </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var loadingIndicator = document.getElementById('loading-indicator');
-    var reportContent = document.getElementById('report-content');
-
-    reportContent.style.display = 'none';
-    loadingIndicator.style.display = 'flex';
-
-    setTimeout(function() {
-      if (reportContent.innerHTML.trim() === "") {
-        console.warn("O relatório ainda não está pronto.");
-      }
-      loadingIndicator.style.display = 'none';
-      reportContent.style.display = 'block';
-    }, 2000);
-  });
-</script>

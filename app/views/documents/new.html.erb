@@ -1,13 +1,9 @@
-
 <div class="min-h-screen flex flex-col items-center bg-gray-100 p-6">
   <%= form_for @document, url: documents_path, html: { multipart: true, class: "w-9/12 bg-white p-8 mt-16 rounded-lg shadow-md" } do |f| %>
     <div class="text-center mb-8">
-      <div class="text-center mb-8">
-         <%= image_tag 'file_ease_logo.png', alt: 'Logo', class: 'h-12' %>
-      </div>
-     
+      <%= image_tag 'file_ease_logo.png', alt: 'Logo', class: 'h-12' %>
       <h2 class="text-3xl font-bold text-indigo-900 mb-4">Leitor de Nota Fiscais Online</h2>
-      <p class="text-gray-600 ">Envie o seu arquivo XML para obter todas as informações detalhadas sobre a sua nota fiscal, incluindo dados fiscais, produtos e impostos associados.</p>
+      <p class="text-gray-600">Envie o seu arquivo XML para obter todas as informações detalhadas sobre a sua nota fiscal, incluindo dados fiscais, produtos e impostos associados.</p>
     </div>
     <div id="drop-area" class="mb-4 text-center border-4 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer">
       <%= image_tag 'icons/file_icon.png', alt: 'File Icon', class: 'mx-auto h-12 w-14 mb-8' %>
@@ -15,45 +11,70 @@
       <%= f.file_field :file, class: "hidden", id: "file-input" %>
     </div>
     <div class="text-center">
-      <%= f.submit 'Upload', class: "inline-flex items-center bg-indigo-500 text-white py-3 px-6 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75" do %>
-        Upload
-      <% end %>
+      <%= f.submit 'Upload', class: "inline-flex items-center bg-indigo-500 text-white py-3 px-6 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75", id: "upload-button" %>
+    </div>
+    <div id="loading-indicator" class="hidden justify-center items-center h-64">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+    </div>
+    <br>
+    <div id="report-button" class="text-start">
+       <div class="flex items-center space-x-4">
+        <% if params[:document_id] %>
+          <div><%= params[:file_name] %></div>
+          <%= link_to "Ver Relatório", document_path(params[:document_id]), class: "inline-flex items-center bg-indigo-500 text-white py-3 px-6 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75", target: "_blank" %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 </div>
 
 <script>
-  const dropArea = document.getElementById('drop-area');
-  const fileInput = document.getElementById('file-input');
+  document.addEventListener("DOMContentLoaded", function() {
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = document.getElementById('file-input');
+    const uploadButton = document.getElementById('upload-button');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const reportButton = document.getElementById('report-button');
 
-  dropArea.addEventListener('dragover', (event) => {
-    event.preventDefault();
-    dropArea.classList.add('bg-indigo-50');
-  });
+    dropArea.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropArea.classList.add('bg-indigo-50');
+    });
 
-  dropArea.addEventListener('dragleave', () => {
-    dropArea.classList.remove('bg-indigo-50');
-  });
+    dropArea.addEventListener('dragleave', () => {
+      dropArea.classList.remove('bg-indigo-50');
+    });
 
-  dropArea.addEventListener('drop', (event) => {
-    event.preventDefault();
-    dropArea.classList.remove('bg-indigo-50');
-    const files = event.dataTransfer.files;
-    if (files.length > 0) {
-      fileInput.files = files;
-      dropArea.querySelector('p').textContent = `Arquivo selecionado: ${files[0].name}`;
-    }
-  });
+    dropArea.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropArea.classList.remove('bg-indigo-50');
+      const files = event.dataTransfer.files;
+      if (files.length > 0) {
+        fileInput.files = files;
+        dropArea.querySelector('p').textContent = `Arquivo selecionado: ${files[0].name}`;
+      }
+    });
 
-  dropArea.addEventListener('click', () => {
-    fileInput.click();
-  });
+    dropArea.addEventListener('click', () => {
+      fileInput.click();
+    });
 
-  fileInput.addEventListener('change', () => {
-    const files = fileInput.files;
-    if (files.length > 0) {
-      dropArea.querySelector('p').textContent = `Arquivo selecionado: ${files[0].name}`;
-    }
+    fileInput.addEventListener('change', () => {
+      const files = fileInput.files;
+      if (files.length > 0) {
+        dropArea.querySelector('p').textContent = `Arquivo selecionado: ${files[0].name}`;
+      }
+    });
+
+    uploadButton.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent default form submission
+      loadingIndicator.style.display = 'flex';
+      reportButton.style.display = 'none';
+      setTimeout(function() {
+        loadingIndicator.style.display = 'none';
+        reportButton.style.display = 'block';
+      }, 2000); 
+      document.querySelector('form').submit();
+    });
   });
 </script>
-
