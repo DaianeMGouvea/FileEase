@@ -1,0 +1,24 @@
+<!-- app/views/documents/_filter_form.html.erb -->
+<div id="report-filters" class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mb-6">
+  <%= form_with(url: document_path(@document), method: :get, local: true) do |form| %>
+    <div class="grid grid-cols-3 gap-4 justify-end items-end">
+      
+      <div class="field">
+        <%= form.label :xProd, 'NCM' %>
+        <%= form.text_field :NCM, value: params[:NCM], class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :xProd, 'Nome do Produto' %>
+        <%= form.text_field :xProd, value: params[:xProd], class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' %>
+      </div>
+
+      <div class="flex-shrink-0 justify-center items-center">
+        <%= form.submit "Filtrar", class: "inline-flex items-center bg-indigo-500 text-white font-bold py-2.5	px-6 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75" %>
+        <%= link_to "Limpar Filtros", document_path(@document), class: "inline-flex items-center bg-[#6bdae2] text-white font-bold py-2.5 px-6 rounded hover:bg-[#6bdae2] hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-[#6bdae2] focus:ring-opacity-75" %>
+      </div>
+    </div>
+
+    
+  <% end %>
+</div>

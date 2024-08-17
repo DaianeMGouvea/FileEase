@@ -34,6 +34,25 @@ class DocumentsController < ApplicationController
 
   def show
     @document = Document.find(params[:id])
+    @report = @document.report
+
+    if @report.present? && @report['products'].present?
+      @filtered_products = @report['products']
+
+      if params[:NCM].present?
+        @filtered_products = @filtered_products.select do |product|
+          product['NCM'] == params[:NCM]
+        end
+      end
+
+      if params[:xProd].present?
+        @filtered_products = @filtered_products.select do |product|
+          product['xProd'].downcase.include?(params[:xProd].downcase)
+        end
+      end
+    else
+      @filtered_products = []
+    end
   end
 
   def export_to_excel
