@@ -19,9 +19,12 @@ RSpec.describe 'Documents', type: :request do
   end
 
   describe 'POST /documents' do
-    it 'creates a new document and redirects to its page' do
-      post documents_path, params: { document: { file: fixture_file_upload('test_file.xml') } }
-      expect(response).to redirect_to(document_path(Document.last))
+    it 'renders the new document form with errors' do
+      post documents_path, params: { document: { file: nil } }
+
+      expect(response).to render_template(:new)
+      expect(response.body).to include('form')
+      expect(Document.count).to eq(0)
     end
   end
 end

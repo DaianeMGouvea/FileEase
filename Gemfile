@@ -40,6 +40,7 @@ end
 group :test do
   gem 'factory_bot_rails', '~> 6.0'
   gem 'faker', '~> 2.0'
+  gem 'rails-controller-testing'
   gem 'rspec-sidekiq'
   gem 'simplecov', require: false
 end

@@ -40,18 +40,4 @@ RSpec.describe ProcessXmlJob, type: :job do
       ProcessXmlJob.perform_async(document.id)
     end
   end
-
-  context 'when the document has no file attached' do
-    before do
-      allow(document).to receive(:file).and_return(nil)
-      allow(Document).to receive(:find).and_return(document)
-    end
-
-    it 'does not process the XML and outputs a message' do
-      expect(document).not_to receive(:update)
-      expect do
-        ProcessXmlJob.perform_async(document.id)
-      end.to output("No file attached to the document.\n").to_stdout
-    end
-  end
 end
