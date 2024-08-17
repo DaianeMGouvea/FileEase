@@ -38,13 +38,14 @@ class DocumentExcelExporter
 
         sheet.add_row []
 
-        sheet.add_row ['Produto', 'Quantidade', 'Unidade', 'Preço Unitário', 'Preço Total', 'IPI', 'PIS', 'COFINS', 'ICMS'],
+        sheet.add_row ['NCM', 'Produto', 'Quantidade', 'Unidade', 'Preço Unitário', 'Preço Total', 'IPI', 'PIS', 'COFINS', 'ICMS'],
                       style: bold_style
 
         sheet.column_widths 20, 15, 15, 15, 15, 15, 15, 15, 15
 
-        document.report['det'].each do |item|
+        document.report['products'].each do |item|
           sheet.add_row [
+            item['NCM'],
             item['xProd'],
             item['qCom'],
             item['uCom'],

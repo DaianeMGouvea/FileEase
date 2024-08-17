@@ -21,7 +21,7 @@
        <div class="flex items-center space-x-4">
         <% if params[:document_id] %>
           <div><%= params[:file_name] %></div>
-          <%= link_to "Ver Relatório", document_path(params[:document_id]), class: "inline-flex items-center bg-indigo-500 text-white py-3 px-6 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75", target: "_blank" %>
+          <%= link_to "Ver Relatório", document_path(params[:document_id]), class: "inline-flex items-center bg-[#5ba6f8] text-white py-3 px-6 rounded hover:bg-[#5ba6f8] focus:outline-none focus:ring-2 focus:bg-[#5ba6f8] focus:ring-opacity-75", target: "_blank" %>
         <% end %>
       </div>
     </div>
@@ -67,7 +67,7 @@
     });
 
     uploadButton.addEventListener('click', function(event) {
-      event.preventDefault(); // Prevent default form submission
+      event.preventDefault();
       loadingIndicator.style.display = 'flex';
       reportButton.style.display = 'none';
       setTimeout(function() {

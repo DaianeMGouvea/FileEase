@@ -7,8 +7,8 @@ class XmlProcessor
 
   def process
     {
-      serie: extract_serie,
       n_nf: extract_n_nf,
+      serie: extract_serie,
       dh_emi: extract_dh_emi,
       emit: extract_emitente,
       dest: extract_destinatario,
