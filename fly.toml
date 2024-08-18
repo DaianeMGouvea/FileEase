@@ -33,5 +33,5 @@ console_command = '/rails/bin/rails console'
   REDIS_URL = "redis-14801.c308.sa-east-1-1.ec2.redns.redis-cloud.com:14801"
 
 [app]
-name = "fileease"
+  name = "fileease"
 
