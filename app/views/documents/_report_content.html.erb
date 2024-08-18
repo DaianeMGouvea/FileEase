@@ -1,55 +1,82 @@
 <!-- app/views/documents/_report_content.html.erb -->
-<div id="report-content">
-  <% if @document.report.present? %>
-    <div class="max-w-6xl mx-auto p-10 bg-white shadow-lg rounded-lg">
-      <div class= "flex justify-between items-center">
-        <h2 class="text-2xl font-bold mb-4">Relatório</h2>
-        <%= link_to "Exportar para Excel", export_to_excel_document_path(@document), class: "inline-flex items-center bg-[#5ba6f8] text-white font-bold py-2.5	px-6 rounded hover:bg-[#5ba6f8] hover:opacity-75 focus:outline-none focus:ring-2 focus:bg-[#5ba6f8] focus:ring-opacity-75" %>
-      </div>  
-      <div class="border-b pb-4 mb-4">
-        <h3 class="text-xl font-bold mb-2">Dados do Documento Fiscal</h3><br/>
-        <p><strong>Série:</strong> <%= @document.report['serie'] || 'Dados não disponíveis' %></p>
-        <p><strong>Número da Nota Fiscal:</strong> <%= @document.report['n_nf'] || 'Dados não disponíveis' %></p>
-        <p><strong>Data e Hora de Emissão:</strong> <%= @document.report['dh_emi'] || 'Dados não disponíveis' %></p>
-        <p><strong>Emitente:</strong> <%= @document.report['emit'] %></p>
-        <p><strong>Destinatário:</strong> <%= @document.report['dest'] %></p>
-      </div>
+<div class="flex justify-between items-center">
+  <h2 class="text-2xl font-bold mb-4">Relatório</h2>
+  <%= link_to "Exportar para Excel" , export_to_excel_document_path(@document),
+    class: "inline-flex items-center bg-[#5ba6f8] text-white font-bold py-2.5	px-6 rounded hover:bg-[#5ba6f8] hover:opacity-75 focus:outline-none focus:ring-2 focus:bg-[#5ba6f8] focus:ring-opacity-75"
+    %>
+</div>
+<div class="border-b pb-4 mb-4">
+  <h3 class="text-xl font-bold mb-2">Dados do Documento Fiscal</h3><br />
+  <p><strong>Série:</strong>
+    <%= @document.report['serie'] || 'Dados não disponíveis' %>
+  </p>
+  <p><strong>Número da Nota Fiscal:</strong>
+    <%= @document.report['n_nf'] || 'Dados não disponíveis' %>
+  </p>
+  <p><strong>Data e Hora de Emissão:</strong>
+    <%= @document.report['dh_emi'] || 'Dados não disponíveis' %>
+  </p>
+  <p><strong>Emitente:</strong>
+    <%= @document.report['emit'] %>
+  </p>
+  <p><strong>Destinatário:</strong>
+    <%= @document.report['dest'] %>
+  </p>
+</div>
 
-      <div class="border-b pb-4 mb-4">
-        <h3 class="text-xl font-bold mb-2">Produtos Listados</h3>
-        <% if @filtered_products.present? %>
-          <ul class="list-none pl-5 space-y-4">
-            <% @filtered_products.each do |product| %>
-              <li class="p-4 bg-gray-50 rounded-md shadow-sm">
-                <p><strong>Nome:</strong> <%= product['xProd'] || 'Dados não disponíveis' %></p>
-                <p><strong>NCM:</strong> <%= product['NCM'] || 'Dados não disponíveis' %></p>
-                <p><strong>CFOP:</strong> <%= product['CFOP'] || 'Dados não disponíveis' %></p>
-                <p><strong>Unidade Comercializada:</strong> <%= product['uCom'] || 'Dados não disponíveis' %></p>
-                <p><strong>Quantidade Comercializada:</strong> <%= product['qCom'] || 'Dados não disponíveis' %></p>
-                <p><strong>Valor Unitário:</strong> <%= number_to_currency(product['vUnCom'].to_f) || 'Dados não disponíveis' %></p>
-                <br>
-                <h3 class="font-bold mb-2">Impostos Associados<br/></h3>
-                <p><strong>ICMS:</strong> <%= number_to_currency(product['vICMS'] || 'Dados não disponíveis') %></p>
-                <p><strong>IPI:</strong> <%= number_to_currency(product['vIPI'] || 'Dados não disponíveis') %></p>
-                <p><strong>PIS:</strong> <%= number_to_currency(product['vPIS'] || 'Dados não disponíveis') %></p>
-                <p><strong>COFINS:</strong> <%= number_to_currency(product['vCOFINS'] || 'Dados não disponíveis') %></p>
-              </li>
-            <% end %>
-          </ul>
-        <% else %>
-          <p>Não há produtos listados.</p>
+<div class="border-b pb-4 mb-4">
+  <h3 class="text-xl font-bold mb-2">Produtos Listados</h3>
+  <% if @filtered_products.present? %>
+    <ul class="list-none pl-5 space-y-4">
+      <% @filtered_products.each do |product| %>
+        <li class="p-4 bg-gray-50 rounded-md shadow-sm">
+          <p><strong>Nome:</strong>
+            <%= product['xProd'] || 'Dados não disponíveis' %>
+          </p>
+          <p><strong>NCM:</strong>
+            <%= product['NCM'] || 'Dados não disponíveis' %>
+          </p>
+          <p><strong>CFOP:</strong>
+            <%= product['CFOP'] || 'Dados não disponíveis' %>
+          </p>
+          <p><strong>Unidade Comercializada:</strong>
+            <%= product['uCom'] || 'Dados não disponíveis' %>
+          </p>
+          <p><strong>Quantidade Comercializada:</strong>
+            <%= product['qCom'] || 'Dados não disponíveis' %>
+          </p>
+          <p><strong>Valor Unitário:</strong>
+            <%= number_to_currency(product['vUnCom'].to_f) || 'Dados não disponíveis' %>
+          </p>
+          <br>
+          <h3 class="font-bold mb-2">Impostos Associados<br /></h3>
+          <p><strong>ICMS:</strong>
+            <%= number_to_currency(product['vICMS'] || 'Dados não disponíveis' ) %>
+          </p>
+          <p><strong>IPI:</strong>
+            <%= number_to_currency(product['vIPI'] || 'Dados não disponíveis' ) %>
+          </p>
+          <p><strong>PIS:</strong>
+            <%= number_to_currency(product['vPIS'] || 'Dados não disponíveis' ) %>
+          </p>
+          <p><strong>COFINS:</strong>
+            <%= number_to_currency(product['vCOFINS'] || 'Dados não disponíveis' ) %>
+          </p>
+        </li>
         <% end %>
-      </div>
-
-      <div>
-        <h3 class="text-xl font-bold mb-2">Totalizadores</h3><br/>
-        <p><strong>Total dos Produtos:</strong> <%= number_to_currency(@document.report['tot_products'].to_f) || 'Dados não disponíveis' %></p>
-        <p><strong>Total dos Impostos:</strong> <%= number_to_currency(@document.report['tot_taxes'].to_f) || 'Dados não disponíveis' %></p>
-      </div>
-    </div>
-  <% else %>
-    <div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <p>Nenhum relatório disponível.</p>
-    </div>
+    </ul>
+    <% else %>
+      <p>Não há produtos listados.</p>
   <% end %>
 </div>
+
+<div>
+  <h3 class="text-xl font-bold mb-2">Totalizadores</h3><br />
+  <p><strong>Total dos Produtos:</strong>
+    <%= number_to_currency(@document.report['tot_products'].to_f) || 'Dados não disponíveis' %>
+  </p>
+  <p><strong>Total dos Impostos:</strong>
+    <%= number_to_currency(@document.report['tot_taxes'].to_f) || 'Dados não disponíveis' %>
+  </p>
+</div>
+

@@ -1,4 +1,14 @@
 <div id="report-content">
-  <%= render 'filter_form' %>
-  <%= render 'report_content' %>
+  <% if @document.report.present? %>
+    <div id="report-filters" class="max-w-6xl mx-auto p-8 bg-white shadow-lg rounded-lg mb-6 min-w-full md:min-w-0">
+      <%= render 'filter_form' %>
+    </div>
+    <div id="report-content" class="max-w-6xl mx-auto p-8 bg-white shadow-lg rounded-l min-w-full md:min-w-0">
+      <%= render 'report_content' %>
+    </div>
+  <% else %>
+    <div class="max-w-6xl mx-auto p-8 bg-white shadow-lg rounded-lg min-w-full md:min-w-0">
+      <p>Nenhum relatório disponível.</p>
+    </div>
+  <% end %>
 </div>
