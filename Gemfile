@@ -34,6 +34,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'byebug'
   gem 'web-console'
 end
 

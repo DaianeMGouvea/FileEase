@@ -8,27 +8,16 @@ class DocumentsController < ApplicationController
 
   def new
     @document = Document.new
+    @documents = current_user.documents.order(created_at: :desc)
   end
 
   def create
     @document = current_user.documents.build(document_params)
-    if @document.save
-      ProcessXmlJob.perform_async(@document.id)
 
-      respond_to do |format|
-        format.html do
-          redirect_to new_document_path(file_name: @document.file.filename.to_s,
-                                        document_id: @document.id)
-        end
-        format.json { render json: { file_name: @document.file.filename.to_s, document_id: @document.id } }
-      end
+    if @document.file.content_type == 'application/zip'
+      process_zip(@document)
     else
-      respond_to do |format|
-        format.html { render :new }
-        format.json do
-          render json: { error: @document.errors.full_messages.to_sentence }, status: :unprocessable_entity
-        end
-      end
+      process_single_document(@document)
     end
   end
 
@@ -64,6 +53,35 @@ class DocumentsController < ApplicationController
   end
 
   private
+
+  def process_single_document(document)
+    if document.save
+      ProcessXmlJob.perform_async(document.id)
+      respond_to do |format|
+        format.html { redirect_to new_document_path(file_name: document.file.filename.to_s, document_id: document.id) }
+        format.json { render json: { file_name: document.file.filename.to_s, document_id: document.id } }
+      end
+    else
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: { error: document.errors.full_messages.to_sentence }, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def process_zip(document)
+    if ZipFileProcessor.new(document, current_user).process
+      respond_to do |format|
+        format.html { redirect_to new_document_path, notice: 'ZIP file is being processed' }
+        format.json { render json: { message: 'ZIP file is being processed' }, status: :ok }
+      end
+    else
+      respond_to do |format|
+        format.html { render :new, alert: 'Failed to process ZIP file' }
+        format.json { render json: { error: 'Failed to process ZIP file' }, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def set_document
     @document = Document.find(params[:id])
