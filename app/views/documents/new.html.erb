@@ -18,14 +18,8 @@
     </div>
     <br>
     <div id="report-button" class="text-start">
-      <div class="flex flex-col items-center divide-y-4 divide-slate-400/25">
-        <% @documents.each do |document| %>
-          <div class="flex justify-between items-center gap-4 py-4 w-full">
-            <div><%= File.basename(document.file.file.path) %></div>
-            <%= link_to "Ver Relatório", document_path(document.id), class: "inline-flex items-center bg-[#5ba6f8] text-white py-3 px-6 rounded hover:bg-[#5ba6f8] focus:outline-none focus:ring-2 focus:bg-[#5ba6f8] focus:ring-opacity-75", target: "_blank" %>
-          </div>
-        <% end %>
-      </div>
+          <%= render 'document_tabs', documents_all: @documents_all, documents_recent: @documents_recent %>
+      
     </div>
   <% end %>
 </div>

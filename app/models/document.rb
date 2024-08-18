@@ -15,4 +15,8 @@ class Document < ApplicationRecord
   belongs_to :user
   mount_uploader :file, DocumentUploader
   validates :file, presence: true
+
+  scope :created_recently, lambda {
+    where(created_at: (Time.current - 5.minutes)..Time.current)
+  }
 end

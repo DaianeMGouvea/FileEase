@@ -8,7 +8,8 @@ class DocumentsController < ApplicationController
 
   def new
     @document = Document.new
-    @documents = current_user.documents.order(created_at: :desc)
+    @documents_all = current_user.documents.limit(5).order(created_at: :desc)
+    @documents_recent = current_user.documents.created_recently.order(created_at: :desc)
   end
 
   def create
@@ -88,6 +89,6 @@ class DocumentsController < ApplicationController
   end
 
   def document_params
-    params.require(:document).permit(:file)
+    params.require(:document).permit(:file, :tab)
   end
 end
