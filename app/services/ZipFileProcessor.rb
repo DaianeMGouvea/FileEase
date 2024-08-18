@@ -6,7 +6,7 @@ class ZipFileProcessor
   end
 
   def process
-    return unless @document.file.present?
+    return false unless @document.file.present?
 
     begin
       Zip::File.open(@document.file.path) do |zip_file|
@@ -15,6 +15,9 @@ class ZipFileProcessor
         end
       end
       true
+    rescue Zip::Error => e
+      Rails.logger.error("Zip processing error: #{e.message}")
+      false
     rescue StandardError => e
       Rails.logger.error("Failed to process ZIP file: #{e.message}")
       false

@@ -43,19 +43,19 @@ class DocumentExcelExporter
 
         sheet.column_widths 20, 15, 15, 15, 15, 15, 15, 15, 15
 
-        document.report['products'].each do |item|
-          sheet.add_row [
-            item['NCM'],
-            item['xProd'],
-            item['qCom'],
-            item['uCom'],
-            item['vUnCom'],
-            item['vProd'],
-            item['vIPI'],
-            item['vPIS'],
-            item['vCOFINS'],
-            item['vICMS']
-          ]
+        if document.report['products'].present?
+          document.report['products'].each do |item|
+            sheet.add_row [
+              item['NCM'],
+              item['xProd'],
+              item['qCom'],
+              item['uCom'],
+              item['vUnCom'],
+              item['vProd'],
+              item['vIPI'],
+              item['vPIS']
+            ]
+          end
         end
       end
     end

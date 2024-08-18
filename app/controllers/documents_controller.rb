@@ -8,8 +8,8 @@ class DocumentsController < ApplicationController
 
   def new
     @document = Document.new
-    @documents_all = current_user.documents.limit(5).order(created_at: :desc)
     @documents_recent = current_user.documents.created_recently.order(created_at: :desc)
+    @documents_all = current_user.documents.limit(10).order(created_at: :desc)
   end
 
   def create
@@ -23,7 +23,6 @@ class DocumentsController < ApplicationController
   end
 
   def show
-    @document = Document.find(params[:id])
     @report = @document.report
 
     if @report.present? && @report['products'].present?
@@ -59,8 +58,8 @@ class DocumentsController < ApplicationController
     if document.save
       ProcessXmlJob.perform_async(document.id)
       respond_to do |format|
-        format.html { redirect_to new_document_path(file_name: document.file.filename.to_s, document_id: document.id) }
-        format.json { render json: { file_name: document.file.filename.to_s, document_id: document.id } }
+        format.html { redirect_to new_document_path, notice: 'XML file is being processed' }
+        format.json { render json: { message: 'ZIP file is being processed' }, status: :ok }
       end
     else
       respond_to do |format|

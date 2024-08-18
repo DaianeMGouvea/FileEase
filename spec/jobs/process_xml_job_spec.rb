@@ -22,15 +22,22 @@ RSpec.describe ProcessXmlJob, type: :job do
     allow(processor).to receive(:process).and_return(report_data)
   end
 
+  around do |example|
+    original_logger = Rails.logger
+    log_io = StringIO.new
+    Rails.logger = Logger.new(log_io)
+
+    example.run
+
+    Rails.logger = original_logger
+  end
+
   context 'when the document has a file attached' do
     before do
-      # Stubbing the file path
       allow(document.file).to receive(:path).and_return('some_path')
 
-      # Mocking and stubbing
       allow(Document).to receive(:find).and_return(document)
 
-      # Stub the existence check for any file path
       allow(File).to receive(:exist?).and_call_original
       allow(File).to receive(:exist?).with('some_path').and_return(true)
     end

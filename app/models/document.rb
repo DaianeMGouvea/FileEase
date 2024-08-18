@@ -19,4 +19,5 @@ class Document < ApplicationRecord
   scope :created_recently, lambda {
     where(created_at: (Time.current - 5.minutes)..Time.current)
   }
+  
 end
